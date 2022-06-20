@@ -28,4 +28,8 @@ h = np.array([7, 8])
 print(h.shape)
 print(np.dot(g, h))
 
-
+i = np.array([1, 2])
+print(i.shape)
+j = np.array([[1, 3, 5], [2, 4, 6]])
+print(j.shape)
+print(np.dot(i, j))
