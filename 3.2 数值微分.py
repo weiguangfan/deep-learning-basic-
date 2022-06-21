@@ -4,9 +4,9 @@ import matplotlib.pyplot as plt
 # def numerical_diff(f, x):
 #     h = 10e-50
 #     return (f(x + h) - f(x))/h
-#
-#
-# print(np.float32(1e-50))
+
+
+print(np.float32(1e-50))
 
 def numerical_diff(f, x):
     h = 1e-4

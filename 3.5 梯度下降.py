@@ -1,10 +1,10 @@
 import numpy as np
 
 
-def function_2(x):
-    print("x: ",x)
-    return x[0]**2 + x[1]**2
 
+def function_2(x):
+    print("x: ", x)
+    return x[0]**2 + x[1]**2
 
 def numerical_gradient(f, x):
     h = 1e-4
@@ -24,9 +24,20 @@ def numerical_gradient(f, x):
         x[idx] = tmp_val
     return grad
 
+def gradient_descent(f, init_x, lr = 0.01, step_num=100):
+    x = init_x
+    for i in range(step_num):
+        print("###" * 10)
+        print("i: ",i)
+        grad = numerical_gradient(f, x)
+        x -= lr * grad
+    return x
 
-print(numerical_gradient(function_2, np.array([3.0, 4.0])))
-print(numerical_gradient(function_2, np.array([0.0, 2.0])))
-print(numerical_gradient(function_2, np.array([3.0, 0.0])))
+init_x = np.array([-3.0, 4.0])
+# gradient_descent(function_2, init_x, lr=0.1, step_num=100)
+# gradient_descent(function_2, init_x, lr=10, step_num=100)
+# gradient_descent(function_2, init_x, lr=1e-10, step_num=100)
+
+
 
 
