@@ -37,16 +37,25 @@ def numerical_gradient(f, x):
 
 class simpleNet(object):
     def __init__(self):
-        self.w = np.random.randn(2,3)
+        self.w = np.random.randn(2, 3)
 
-    def predict(self,x):
-        return np.dot(x,self.w)
+    def predict(self, x):
+        return np.dot(x, self.w)
 
-    def loss(self, x,t):
+    def loss(self, x, t):
         z = self.predict(x)
         y = soft_max(z)
         loss = cross_entropy_error(y, t)
         return loss
+
+net = simpleNet()
+print(net.w)
+x = np.array([0.6, 0.9])
+p = net.predict(x)
+print(p)
+print(np.argmax(p))
+t = np.array([0,0,1])
+
 
 
 
