@@ -17,21 +17,40 @@ def soft_max(a):
 
 
 def numerical_gradient(f, x):
+    print("x: ", x)
     h = 1e-4
     grad = np.zeros_like(x)
     print("grad: ", grad)
-    for idx in range(x.size):
+    print("grad.shape: ", grad.shape)
+    # for idx in range(x.size):
+    #     tmp_val = x[idx]
+    #     x[idx] = tmp_val + h
+    #     fxh1 = f(x)
+    #
+    #     x[idx] = tmp_val - h
+    #     fxh2 = f(x)
+    #     grad[idx] = (fxh1 - fxh2)/(2*h)
+    #     x[idx] = tmp_val
+
+    it = np.nditer(x, flags=['multi_index'], op_flags=['readwrite'])
+    print("it: ", it)
+    while not it.finished:
+        idx = it.multi_index
         print("idx: ", idx)
         tmp_val = x[idx]
-        print('i:tmp_val: ', idx, tmp_val)
+        print('tmp_val: ', tmp_val)
         x[idx] = tmp_val + h
+        print('++ x[idx]: : ', x[idx])
         fxh1 = f(x)
-        print("idx:fxh1: ", idx, fxh1)
+
         x[idx] = tmp_val - h
+        print('-- x[idx]: : ', x[idx])
         fxh2 = f(x)
-        grad[idx] = (fxh1 - fxh2)/(2*h)
-        print("grad: ", grad)
+        grad[idx] = (fxh1 - fxh2) / (2*h)
+        print('grad[idx]: ', grad[idx])
         x[idx] = tmp_val
+        it.iternext()
+
     return grad
 
 
@@ -40,24 +59,49 @@ class simpleNet(object):
         self.w = np.random.randn(2, 3)
 
     def predict(self, x):
+        print("self.w: ", self.w)
+        print("predict input x: ", x)
         return np.dot(x, self.w)
 
     def loss(self, x, t):
+        print("loss_input x: ", x)
+        print("loss_input t: ", t)
         z = self.predict(x)
+        print("z: ", z)
+        print("z.shape: ", z.shape)
         y = soft_max(z)
+        print("y: ", y)
+        print("y.shape: ", y.shape)
         loss = cross_entropy_error(y, t)
+        print("loss: ", loss)
         return loss
 
+
 net = simpleNet()
-print(net.w)
+print("net.w: ", net.w)
+print("net.w.shape: ", net.w.shape)
+
 x = np.array([0.6, 0.9])
-p = net.predict(x)
-print(p)
-print(np.argmax(p))
-t = np.array([0,0,1])
+print("x: ", x)
+print("x.shape: ", x.shape)
+
+# p = net.predict(x)
+# print(p)
+# print(p.shape)
+# print(np.argmax(p))
+t = np.array([0, 0, 1])
+print("t: ", t)
+print("t.shape: ", t.shape)
+# net.loss(x, t)
 
 
+# def f(W):
+#     return net.loss(x, t)
 
+f = lambda w:net.loss(x, t)
+
+dw = numerical_gradient(f, net.w)
+print(dw)
 
 
 
