@@ -206,9 +206,9 @@ for i in range(iters_num):
     t_batch = t_train[batch_mask]
     grad = network.gradients(x_batch, t_batch)
     for key in ('w1','b1','w2','b2',):
-
         network.params[key] -= learning_rate * grad[key]
-    loss = network.loss(x_batch,t_batch)
+
+    loss = network.loss(x_batch, t_batch)
     train_loss_list.append(loss)
 
     if i % iter_per_epoch == 0:
