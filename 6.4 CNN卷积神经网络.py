@@ -53,7 +53,28 @@ class SimpleConvNet(object):
         return self.last_layer.forward(y, t)
 
     def gradient(self, x, t):
-        pass
+        self.loss(x, t)
+        dout = 1
+        dout = self.last_layer.backword(dout)
+        layers = list(self.last_layer.values())
+        layers.reverse()
+        for layer in layers:
+            dout = layer.backward(dout)
+        grads = {}
+        grads['w1'] = self.layers['Conv1'].dW
+        grads['b1'] = self.layers['Conv1'].db
+        grads['w2'] = self.layers['Affine1'].dW
+        grads['b2'] = self.layers['Affine1'].db
+        grads['w3'] = self.layers['Affine2'].dW
+        grads['b3'] = self.layers['Affine2'].db
+
+        return grads
+
+
+
+
+
+
 
 
 
