@@ -1,9 +1,9 @@
 """
+感知机的实现
 与门;
 与非门；
 或门；
 """
-
 
 # def and_gate(x1, x2):
 #     w1, w2, theta = 0.5, 0.5, 0.7
@@ -14,6 +14,7 @@
 #         return 1
 
 
+# 与门真值表
 # print(and_gate(0, 0))
 # print(and_gate(1, 0))
 # print(and_gate(0, 1))
@@ -31,12 +32,16 @@ import numpy as np
 # print(np.sum(w * x))
 # print((np.sum(w * x) + b))
 
+"""
+用权重和偏置的实现
+"""
+
 
 def and_gate(x1, x2):
     x = np.array([x1, x2])
     w = np.array([0.5, 0.5])
     b = -0.7
-    tmp = np.sum(w*x) + b
+    tmp = np.sum(w * x) + b
     if tmp <= 0:
         return 0
     else:
@@ -45,7 +50,7 @@ def and_gate(x1, x2):
 
 def not_and_gate(x1, x2):
     x = np.array([x1, x2])
-    w = np.array([-0.5, -0.5])
+    w = np.array([-0.5, -0.5]) # 仅权重和偏置与AND不同！
     b = 0.7
     tmp = np.sum(w*x) + b
     if tmp <= 0:
@@ -56,7 +61,7 @@ def not_and_gate(x1, x2):
 
 def or_gate(x1, x2):
     x = np.array([x1, x2])
-    w = np.array([0.5, 0.5])
+    w = np.array([0.5, 0.5]) # 仅权重和偏置与AND不同！
     b = -0.2
     tmp = np.sum(w*x) + b
     if tmp <= 0:
@@ -69,6 +74,7 @@ def or_gate(x1, x2):
 用与非门、非门、与门组合异或门
 """
 
+
 def xor_gate(x1, x2):
     s1 = not_and_gate(x1, x2)
     s2 = or_gate(x1, x2)
@@ -80,4 +86,3 @@ print(xor_gate(0, 0))
 print(xor_gate(0, 1))
 print(xor_gate(1, 0))
 print(xor_gate(0, 0))
-
