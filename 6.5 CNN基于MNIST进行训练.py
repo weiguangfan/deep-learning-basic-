@@ -157,7 +157,7 @@ trainer = Trainer(network, x_train, t_train, x_test, t_test,
                   evaluate_sample_num_per_epoch=1000)
 trainer.train()
 
-# パラメータの保存
+# 训练完成，保存权重参数
 network.save_params("params.pkl")
 print("Saved Network Parameters!")
 

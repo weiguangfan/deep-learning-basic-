@@ -133,22 +133,21 @@ class SimpleConvNet(object):
             self.params[key] = val
 
         for i, key in enumerate(['Conv1', 'Affine1', 'Affine2']):
-            self.layers[key].W = self.params['W' + str(i+1)]
+            self.layers[key].W = self.params['w' + str(i+1)]
             self.layers[key].b = self.params['b' + str(i+1)]
-
-
-
-
 
 
 def filter_show(filters, nx=8, margin=3, scale=10):
     """
     c.f. https://gist.github.com/aidiary/07d530d5e08011832b12#file-draw_weight-py
     """
+    # 读取权重维度
     FN, C, FH, FW = filters.shape
+    # np.ceil: 向上取整函数
     ny = int(np.ceil(FN / nx))
-
+    # 生成图像对象
     fig = plt.figure()
+    # 调整子图参数
     fig.subplots_adjust(left=0, right=1, bottom=0, top=1, hspace=0.05, wspace=0.05)
 
     for i in range(FN):
@@ -159,15 +158,9 @@ def filter_show(filters, nx=8, margin=3, scale=10):
 
 network = SimpleConvNet()
 
-filter_show(network.params['w1'])
+# filter_show(network.params['w1'])
 
-# 学習後の重み
+# 加载已有权重参数
 network.load_params("params.pkl")
 filter_show(network.params['w1'])
-
-
-
-
-
-
 
