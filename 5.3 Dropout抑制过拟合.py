@@ -1,3 +1,10 @@
+"""
+7层网络（每层有100个神经元，激活函数为Relu）
+一个使用DropOut,一个不使用DropOut
+通过使用DropOut，训练数据和测试数据的识别精度的差距变小了。
+即便是表现力强的网络，也可以抑制过拟合；
+
+"""
 # coding: utf-8
 import os
 import sys
@@ -15,7 +22,8 @@ x_train = x_train[:300]
 t_train = t_train[:300]
 
 # Dropuoutの有無、割り合いの設定 ========================
-use_dropout = True  # Dropoutなしのときの場合はFalseに
+use_dropout = False  # 不使用
+# use_dropout = True  # Dropoutなしのときの場合はFalseに
 dropout_ratio = 0.2
 # ====================================================
 

@@ -102,7 +102,9 @@ class Dropout:
 
     def forward(self, x, train_flg=True):
         if train_flg:
+            # boolean数组
             self.mask = np.random.rand(*x.shape) > self.dropout_ratio
+            # 返回boolean数组为True的对应x中的元素
             return x * self.mask
         else:
             return x * (1.0 - self.dropout_ratio)
