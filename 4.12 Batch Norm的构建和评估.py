@@ -1,3 +1,20 @@
+"""
+为了使各层拥有适当地广度，强制性地调整激活函数的分布，Batch Normalization方法就是基于这个想法产生的；
+Batch Norm 优点：
+    可以使学习快速进行，可以增大学习率；
+    不那么依赖初始值，对于初始值不用那么神经质；
+    抑制过拟合，降低DropOut等的必要性；
+要向神经网络中插入对数据分布进行正规化的层，即Batch Normalization层；
+Batch Norm，顾名思义，以进行学习时的mini-batch为单位，按mini-batch进行正规化。
+就是进行使数据分布的均值为0,方差为1的正规化；
+将这个处理插入到激活函数的前面，就可以减小数据分布的偏向；
+Batch Norm层会对数据进行缩放和平移；
+观察使用和不使用Batch Norm层时学习过程会如何变化；
+使用Batch Norm后，学习进行得更快了；
+在不使用Batch Norm时，如果不赋予一个尺度好的初始值，学习将完全无法进行；
+通过使用Batch Norm,可以推动学习的进行。并且，对权重初始值变得健壮。
+"""
+
 # coding: utf-8
 import sys, os
 sys.path.append(os.pardir)  # 親ディレクトリのファイルをインポートするための設定
