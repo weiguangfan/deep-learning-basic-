@@ -248,6 +248,8 @@ grad_numerial = network.numerical_gradient(x_batch, t_batch)
 # 误差反向传播求梯度
 grad_backprop = network.gradients(x_batch, t_batch)
 # 求各个权证的绝对误差的平均值：MAE(mean absolute error)
+# 实现正确的话，误差是一个接近0的很小的值；
+# 如果这个值很大，说明误差反向传播法的实现存在错误；
 for key in grad_numerial.keys():
     diff = np.average(np.abs(grad_backprop[key] - grad_numerial[key]))
     print(key + ': ' + str(diff))
