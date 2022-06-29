@@ -1,3 +1,6 @@
+"""
+通过使用层进行模块化，神经网络可以自由地组装，轻松构建喜欢的网络；
+"""
 import sys, os
 sys.path.append(os.pardir)
 import numpy as np
@@ -204,7 +207,9 @@ for i in range(iters_num):
     batch_mask = np.random.choice(train_size, batch_size)
     x_batch = x_train[batch_mask]
     t_batch = t_train[batch_mask]
+    # 通过误差反向传播法求梯度
     grad = network.gradients(x_batch, t_batch)
+    # 更新
     for key in ('w1','b1','w2','b2',):
         network.params[key] -= learning_rate * grad[key]
 
