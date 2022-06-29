@@ -1,3 +1,9 @@
+"""
+基于mnist数据集的4种更新方法的比较;
+以一个5层神经网络为对象，其中每层100个神经元；
+激活函数是ReLu;
+"""
+
 # coding: utf-8
 import os
 import sys
@@ -23,7 +29,7 @@ optimizers['SGD'] = SGD()
 optimizers['Momentum'] = Momentum()
 optimizers['AdaGrad'] = AdaGrad()
 optimizers['Adam'] = Adam()
-#optimizers['RMSprop'] = RMSprop()
+# optimizers['RMSprop'] = RMSprop()
 
 networks = {}
 train_loss = {}
