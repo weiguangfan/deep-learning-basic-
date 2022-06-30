@@ -1,3 +1,6 @@
+"""
+通过组装的CNN网络，进行训练集和测试集的识别精度的对比；
+"""
 # coding: utf-8
 import sys, os
 sys.path.append(os.pardir)  # 親ディレクトリのファイルをインポートするための設定
