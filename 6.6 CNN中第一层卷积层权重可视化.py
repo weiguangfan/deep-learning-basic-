@@ -1,7 +1,13 @@
 """
+通过卷积层的可视化，探索CNN中到底进行了什么处理；
+卷积层的滤波器会提取边缘或斑块等原始信息。
+实现的CNN会将这些原始信息传递给后面的层；
 学习前的滤波器是随机初始化的， 在黑白的浓淡上没有规律可循；
 学习后的滤波器变成了有规律的图像；
-从白到黑渐变的滤波器Edge（滤波器观察边缘，颜色变化的分界线）、含有块状区域的滤波器Blob（滤波器观察斑块，局部的块状区域）；、
+从白到黑渐变的滤波器Edge（滤波器观察边缘，颜色变化的分界线）、含有块状区域的滤波器Blob（滤波器观察斑块，局部的块状区域）；
+第一层的卷积层中提取了边缘或斑块等低级信息，那么在堆叠了多层的CNN中，各层中又会提取什么样的信息呢？
+随着层次加深，提取信息也越来越抽象。
+
 """
 # coding: utf-8
 import numpy as np
@@ -94,8 +100,8 @@ class SimpleConvNet(object):
         self.loss(x, t)
         dout = 1
         # 各个层均实现了反向传播
-        dout = self.last_layer.backword(dout)
-        layers = list(self.last_layer.values())
+        dout = self.last_layer.backward(dout)
+        layers = list(self.layers.values())
         layers.reverse()
         for layer in layers:
             dout = layer.backward(dout)
@@ -162,10 +168,10 @@ def filter_show(filters, nx=8, margin=3, scale=10):
 
 
 network = SimpleConvNet()
-
+# 初始状态的滤波器
 # filter_show(network.params['w1'])
 
-# 加载已有权重参数
+# 训练完成后，加载已有权重参数
 network.load_params("params.pkl")
 filter_show(network.params['w1'])
 
