@@ -1,4 +1,5 @@
 """
+网络构成：conv-relu-pooling-affine-relu-affine-softmax
 CNN的实现
 """
 
@@ -55,7 +56,6 @@ class SimpleConvNet(object):
         self.layers['Affine2'] = Affine(self.params['w3'],
                                         self.params['b3'])
         # 最后一层
-
         self.last_layer = SoftmaxWithLoss()
 
     # 推理函数
@@ -108,7 +108,8 @@ class SimpleConvNet(object):
         return grads
 
     def accuracy(self, x, t, batch_size=100):
-        if t.ndim != 1 : t = np.argmax(t, axis=1)
+        if t.ndim != 1:
+            t = np.argmax(t, axis=1)
 
         acc = 0.0
 
@@ -137,29 +138,4 @@ class SimpleConvNet(object):
         for i, key in enumerate(['Conv1', 'Affine1', 'Affine2']):
             self.layers[key].W = self.params['W' + str(i+1)]
             self.layers[key].b = self.params['b' + str(i+1)]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
