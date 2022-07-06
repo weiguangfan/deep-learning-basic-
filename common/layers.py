@@ -214,15 +214,19 @@ class Convolution:
         self.db = None
 
     def forward(self, x):
+        """调用函数im2col，将4维输入转换为2维矩阵"""
         FN, C, FH, FW = self.W.shape
         N, C, H, W = x.shape
         out_h = 1 + int((H + 2*self.pad - FH) / self.stride)
         out_w = 1 + int((W + 2*self.pad - FW) / self.stride)
-
+        # im2col实现过程
+        # 输入横向展开为一列
         col = im2col(x, FH, FW, self.stride, self.pad)
+        # 过滤器纵向展开为一列
         col_W = self.W.reshape(FN, -1).T
-
+        # 实现矩阵乘法
         out = np.dot(col, col_W) + self.b
+        # 调整输出形状
         out = out.reshape(N, out_h, out_w, -1).transpose(0, 3, 1, 2)
 
         self.x = x
@@ -256,15 +260,22 @@ class Pooling:
         self.arg_max = None
 
     def forward(self, x):
+        """调用函数im2col，将4维输入转换为2维矩阵"""
         N, C, H, W = x.shape
         out_h = int(1 + (H - self.pool_h) / self.stride)
         out_w = int(1 + (W - self.pool_w) / self.stride)
 
+        # im2col转换过程
         col = im2col(x, self.pool_h, self.pool_w, self.stride, self.pad)
+        # 应用池化器的区域，按通道，横向排成一列
         col = col.reshape(-1, self.pool_h*self.pool_w)
 
         arg_max = np.argmax(col, axis=1)
+
+        # 求出1维方向的最大值
         out = np.max(col, axis=1)
+
+        # 重新调整输出的形状
         out = out.reshape(N, out_h, out_w, C).transpose(0, 3, 1, 2)
 
         self.x = x
@@ -273,6 +284,7 @@ class Pooling:
         return out
 
     def backward(self, dout):
+        """参照relu的backward()"""
         dout = dout.transpose(0, 2, 3, 1)
         
         pool_size = self.pool_h * self.pool_w
