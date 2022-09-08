@@ -9,8 +9,9 @@ import pickle
 import os
 import numpy as np
 
-
+# 数据集url
 url_base = 'http://yann.lecun.com/exdb/mnist/'
+# 数据集字典
 key_file = {
     'train_img':'train-images-idx3-ubyte.gz',
     'train_label':'train-labels-idx1-ubyte.gz',
