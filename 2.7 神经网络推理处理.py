@@ -78,6 +78,8 @@ network = init_network()
 accuracy_cnt = 0
 for i in range(len(x)):
     y = predict(network, x[i])  # 以数组形式输出各个标签对应的概率
+    if i == 6:
+        print(y.shape)
     p = np.argmax(y)  # 取出概率列表最大值的索引
     if p == t[i]:
         accuracy_cnt += 1

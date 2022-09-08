@@ -19,9 +19,10 @@ key_file = {
     'test_label':'t10k-labels-idx1-ubyte.gz'
 }
 
+# 拼接保存路径
 dataset_dir = os.path.dirname(os.path.abspath(__file__))
 save_file = dataset_dir + "/mnist.pkl"
-
+# 数据集的形状
 train_num = 60000
 test_num = 10000
 img_dim = (1, 28, 28)
@@ -29,20 +30,34 @@ img_size = 784
 
 
 def _download(file_name):
-    file_path = dataset_dir + "/" + file_name
+    """
 
+    :param file_name:
+    :return:
+    """
+    # 拼接路径
+    file_path = dataset_dir + "/" + file_name
+    # 判定路径是否存在
     if os.path.exists(file_path):
         return
 
     print("Downloading " + file_name + " ... ")
     headers = {"User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:47.0) Gecko/20100101 Firefox/47.0"}
+    # 请求指定路径的文件
     request = urllib.request.Request(url_base+file_name, headers=headers)
+    # 响应
     response = urllib.request.urlopen(request).read()
+    # 写入本地文件
     with open(file_path, mode='wb') as f:
         f.write(response)
     print("Done")
 
 def download_mnist():
+    """
+    下载minist数据集
+    :return:
+    """
+    # 遍历字典的值，并传递给函数_download()
     for v in key_file.values():
        _download(v)
 
@@ -57,9 +72,11 @@ def _load_label(file_name):
     return labels
 
 def _load_img(file_name):
+    # 拼接路径
     file_path = dataset_dir + "/" + file_name
 
     print("Converting " + file_name + " to NumPy Array ...")
+    # 读取文件
     with gzip.open(file_path, 'rb') as f:
             data = np.frombuffer(f.read(), np.uint8, offset=16)
     data = data.reshape(-1, img_size)
@@ -77,7 +94,9 @@ def _convert_numpy():
     return dataset
 
 def init_mnist():
+    # 下载数据
     download_mnist()
+    #
     dataset = _convert_numpy()
     print("Creating pickle file ...")
     with open(save_file, 'wb') as f:
@@ -107,6 +126,7 @@ def load_mnist(normalize=True, flatten=True, one_hot_label=False):
     -------
     (訓練画像, 訓練ラベル), (テスト画像, テストラベル)
     """
+    # 判定本地文件不存在，执行函数init_mnist()
     if not os.path.exists(save_file):
         init_mnist()
 
