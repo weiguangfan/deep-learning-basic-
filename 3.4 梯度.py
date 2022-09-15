@@ -38,7 +38,7 @@ def numerical_gradient(f, x):
         # 进行数值微分，并保存为字典
         grad[idx] = (fxh1 - fxh2)/(2*h)
         print("idx:grad: ", idx, grad)
-        # 回复当前下标对应的值
+        # 恢复当前下标对应的值
         x[idx] = tmp_val  # 还原值
     return grad
 """
@@ -84,8 +84,10 @@ print(numerical_gradient(function_2, np.array([3.0, 0.0])))  # [6. 0.]
 更严格地讲，梯度指示的方向是各点处的函数值减小最多的方向 。
 这是一个非常重要的性质，请一定牢记！
 
+
 高等数学告诉我们，方向导数 = cos(θ) × 梯度（θ 是方向导数的方向与梯度方向的夹角）。
 因此，所有的下降方向中，梯度方向下降最多。
+
 
 
 """
