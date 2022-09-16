@@ -1,6 +1,17 @@
 """
-调用backward()和forward()的顺序相反；
-backward()的参数中需要输入关于正向传播时的输出变量的导数；
+接下来，我们实现加法节点的加法层，如下所示。
+加法层不需要特意进行初始化，所以 __init__() 中什么也不运行（pass 语句表示“什么也不运行”）。
+加法层的 forward() 接收 x 和 y 两个参数，将它们相加后输出。
+backward() 将上游传来的导数（dout）原封不动地传递给下游。
+
+现在，我们使用加法层和乘法层，实现图 5-17 所示的购买 2 个苹果和 3 个橘子的例子。
+
+图 5-17　购买 2 个苹果和 3 个橘子
+
+用 Python 实现图 5-17 的计算图的过程如下所示（源代码在ch05/buy_apple_orange.py 中）。
+
+
+
 """
 
 class AddLayer(object):
@@ -61,3 +72,11 @@ dapple_price,dorange_price = add_apple_orange_layer.backward(dall_price)
 dapple,dapple_num = mul_apple_layer.backward(dapple_price)
 dorange,dorange_num = mul_orange_layer.backward(dorange_price)
 print(dapple,dapple_num,dorange,dorange_num,dtax)
+"""
+这个实现稍微有一点长，但是每一条命令都很简单。
+首先，生成必要的层，以合适的顺序调用正向传播的 forward() 方法。
+然后，用与正向传播相反的顺序调用反向传播的 backward() 方法，就可以求出想要的导数。
+综上，计算图中层的实现（这里是加法层和乘法层）非常简单，使用这些层可以进行复杂的导数计算。
+下面，我们来实现神经网络中使用的层。
+
+"""
