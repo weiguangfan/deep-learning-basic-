@@ -1,29 +1,29 @@
 # coding: utf-8
 import sys, os
-sys.path.append(os.pardir) # 親ディレクトリのファイルをインポートするための設定
+sys.path.append(os.pardir) # 用于导入父目录文件的设置
 import numpy as np
 from collections import OrderedDict
 from common.layers import *
 from common.gradient import numerical_gradient
 
 class MultiLayerNetExtend:
-    """拡張版の全結合による多層ニューラルネットワーク
+    """基于扩展版本全耦合的多层神经网络
     
-    Weiht Decay、Dropout、Batch Normalizationの機能を持つ
+    具有Weiht Decay、Dropout、Batch规格化功能
 
     Parameters
     ----------
-    input_size : 入力サイズ（MNISTの場合は784）
-    hidden_size_list : 隠れ層のニューロンの数のリスト（e.g. [100, 100, 100]）
-    output_size : 出力サイズ（MNISTの場合は10）
+    input_size : 输入大小（MNIST时为784）
+    hidden_size_list : 隐层神经元数量列表（e.g. [100, 100, 100]）
+    output_size : 输出尺寸（MNIST时为10）
     activation : 'relu' or 'sigmoid'
-    weight_init_std : 重みの標準偏差を指定（e.g. 0.01）
-        'relu'または'he'を指定した場合は「Heの初期値」を設定
-        'sigmoid'または'xavier'を指定した場合は「Xavierの初期値」を設定
-    weight_decay_lambda : Weight Decay（L2ノルム）の強さ
-    use_dropout: Dropoutを使用するかどうか
-    dropout_ration : Dropoutの割り合い
-    use_batchNorm: Batch Normalizationを使用するかどうか
+    weight_init_std : 指定权重的标准偏差（e.g. 0.01）
+        如果指定“relu”或“he”，则设置“He的初始值”
+        如果指定“sigmoid”或“xavier”，则设置“Xavier初始值”
+    weight_decay_lambda : Weight Decay（L2范数）强度
+    use_dropout: 是否使用拔模
+    dropout_ration : Dropout的分配
+    use_batchNorm: 是否使用批处理规格化
     """
     def __init__(self, input_size, hidden_size_list, output_size,
                  activation='relu', weight_init_std='relu', weight_decay_lambda=0, 
@@ -37,10 +37,10 @@ class MultiLayerNetExtend:
         self.use_batchnorm = use_batchnorm
         self.params = {}
 
-        # 重みの初期化
+        # 权重初始化
         self.__init_weight(weight_init_std)
 
-        # レイヤの生成
+        # 生成层
         activation_layer = {'sigmoid': Sigmoid, 'relu': Relu}
         self.layers = OrderedDict()
         for idx in range(1, self.hidden_layer_num+1):

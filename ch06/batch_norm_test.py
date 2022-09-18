@@ -1,6 +1,6 @@
 # coding: utf-8
 import sys, os
-sys.path.append(os.pardir)  # 親ディレクトリのファイルをインポートするための設定
+sys.path.append(os.pardir)  # 用于导入父目录文件的设置
 import numpy as np
 import matplotlib.pyplot as plt
 from dataset.mnist import load_mnist
@@ -9,7 +9,7 @@ from common.optimizer import SGD, Adam
 
 (x_train, t_train), (x_test, t_test) = load_mnist(normalize=True)
 
-# 学習データを削減
+# 减少学习数据
 x_train = x_train[:1000]
 t_train = t_train[:1000]
 
