@@ -9,7 +9,7 @@ from common.gradient import numerical_gradient
 class MultiLayerNetExtend:
     """基于扩展版本全耦合的多层神经网络
     
-    具有Weiht Decay、Dropout、Batch规格化功能
+    具有Weight Decay、Dropout、Batch规格化功能
 
     Parameters
     ----------
@@ -62,21 +62,21 @@ class MultiLayerNetExtend:
         self.last_layer = SoftmaxWithLoss()
 
     def __init_weight(self, weight_init_std):
-        """重みの初期値設定
+        """权重的初始值设定
 
         Parameters
         ----------
-        weight_init_std : 重みの標準偏差を指定（e.g. 0.01）
-            'relu'または'he'を指定した場合は「Heの初期値」を設定
-            'sigmoid'または'xavier'を指定した場合は「Xavierの初期値」を設定
+        weight_init_std : 指定权重的标准偏差（e.g. 0.01）
+            如果指定“relu”或“he”，则设置“He的初始值”
+            如果指定“sigmoid”或“xavier”，则设置“Xavier初始值”
         """
         all_size_list = [self.input_size] + self.hidden_size_list + [self.output_size]
         for idx in range(1, len(all_size_list)):
             scale = weight_init_std
             if str(weight_init_std).lower() in ('relu', 'he'):
-                scale = np.sqrt(2.0 / all_size_list[idx - 1])  # ReLUを使う場合に推奨される初期値
+                scale = np.sqrt(2.0 / all_size_list[idx - 1])  # 使用ReLU时建议的初始值
             elif str(weight_init_std).lower() in ('sigmoid', 'xavier'):
-                scale = np.sqrt(1.0 / all_size_list[idx - 1])  # sigmoidを使う場合に推奨される初期値
+                scale = np.sqrt(1.0 / all_size_list[idx - 1])  # 使用sigmoid时推荐的初始值
             self.params['W' + str(idx)] = scale * np.random.randn(all_size_list[idx-1], all_size_list[idx])
             self.params['b' + str(idx)] = np.zeros(all_size_list[idx])
 
@@ -90,8 +90,8 @@ class MultiLayerNetExtend:
         return x
 
     def loss(self, x, t, train_flg=False):
-        """損失関数を求める
-        引数のxは入力データ、tは教師ラベル
+        """求损耗函数
+        参数x为输入数据，t为教师标签
         """
         y = self.predict(x, train_flg)
 

@@ -121,13 +121,13 @@ class BatchNormalization:
         self.gamma = gamma
         self.beta = beta
         self.momentum = momentum
-        self.input_shape = None # Conv層の場合は4次元、全結合層の場合は2次元  
+        self.input_shape = None # Conv层为4维，全结合层为2维
 
-        # テスト時に使用する平均と分散
+        # 测试时使用的平均和分布
         self.running_mean = running_mean
         self.running_var = running_var  
         
-        # backward時に使用する中間データ
+        # backward时使用的中间数据
         self.batch_size = None
         self.xc = None
         self.std = None

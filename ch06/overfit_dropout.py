@@ -15,7 +15,7 @@ x_train = x_train[:300]
 t_train = t_train[:300]
 
 # Dropuout有无、分配的设定 ========================
-use_dropout = True  # Dropoutなしのときの場合はFalseに
+use_dropout = True  # 在没有Dropout的情况下为False
 dropout_ratio = 0.2
 # ====================================================
 
@@ -28,7 +28,7 @@ trainer.train()
 
 train_acc_list, test_acc_list = trainer.train_acc_list, trainer.test_acc_list
 
-# グラフの描画==========
+# 绘制图表==========
 markers = {'train': 'o', 'test': 's'}
 x = np.arange(len(train_acc_list))
 plt.plot(x, train_acc_list, marker='o', label='train', markevery=10)
