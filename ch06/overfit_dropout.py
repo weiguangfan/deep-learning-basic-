@@ -1,7 +1,7 @@
 # coding: utf-8
 import os
 import sys
-sys.path.append(os.pardir)  # 親ディレクトリのファイルをインポートするための設定
+sys.path.append(os.pardir)  # 用于导入父目录文件的设置
 import numpy as np
 import matplotlib.pyplot as plt
 from dataset.mnist import load_mnist
@@ -10,11 +10,11 @@ from common.trainer import Trainer
 
 (x_train, t_train), (x_test, t_test) = load_mnist(normalize=True)
 
-# 過学習を再現するために、学習データを削減
+# 减少学习数据以重现过度学习
 x_train = x_train[:300]
 t_train = t_train[:300]
 
-# Dropuoutの有無、割り合いの設定 ========================
+# Dropuout有无、分配的设定 ========================
 use_dropout = True  # Dropoutなしのときの場合はFalseに
 dropout_ratio = 0.2
 # ====================================================

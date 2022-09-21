@@ -5,7 +5,7 @@ import numpy as np
 from common.optimizer import *
 
 class Trainer:
-    """ニューラルネットの訓練を行うクラス
+    """进行神经网络训练的班级
     """
     def __init__(self, network, x_train, t_train, x_test, t_test,
                  epochs=20, mini_batch_size=100,
