@@ -15,16 +15,16 @@ def smooth_curve(x):
 
 
 def shuffle_dataset(x, t):
-    """データセットのシャッフルを行う
+    """对数据集进行洗牌
 
     Parameters
     ----------
-    x : 訓練データ
-    t : 教師データ
+    x : 训练数据
+    t : 教师数据
 
     Returns
     -------
-    x, t : シャッフルを行った訓練データと教師データ
+    x, t : 进行洗牌的训练数据和教师数据
     """
     permutation = np.random.permutation(x.shape[0])
     x = x[permutation,:] if x.ndim == 2 else x[permutation,:,:,:]
