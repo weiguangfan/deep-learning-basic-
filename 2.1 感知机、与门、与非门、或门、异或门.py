@@ -5,12 +5,14 @@ x1,x2 是输入信号，y 是输出信号，w1,w2是权重（w 是 weight 的首
 神经元会计算传送过来的信号的总和，只有当这个总和超过了某个界限值时，才会输出 1。这也称为“神经元被激活”。
 这里将这个界限值称为阈值，用符号 θ 表示。
 有两个输入的感知机,把上述内容用数学式来表示
+式子2.1
 y = 0 (w1x1 + w2x2 <= θ),
 y = 1 (w1x1 + w2x2 > θ)
 
 改为另外一种形式，θ = -b:
 此处，b 称为偏置，w1 和 w2 称为权重。
 如下所示，感知机会计算输入信号和权重的乘积，然后加上偏置，如果这个值大于 0 则输出 1，否则输出 0。
+式子2.2
 y = 0 (b + w1x1 + w2x2 <= 0),
 y = 1 (b + w1x1 + w2x2 > 0)
 
@@ -54,10 +56,11 @@ y = 1 (b + w1x1 + w2x2 > 0)
 
 # def and_gate(x1, x2):
 #     """
+#     式子2.1
 #     用 Python 来实现与门逻辑电路。
-#     :param x1:
-#     :param x2:
-#     :return:
+#     :param x1: 输入参数1
+#     :param x2: 输入参数2
+#     :return: 返回0或1
 #     """
 #     # 在函数内初始化参数 w1、w2、theta，当输入的加权总和超过阈值时返回 1，否则返回 0。
 #     w1, w2, theta = 0.5, 0.5, 0.7
@@ -84,20 +87,22 @@ numpy 改写 与门
 """
 import numpy as np
 
-x = np.array([0, 1])      # 输入
-w = np.array([0.5, 0.5])  # 权重
-b = -0.7                  # 偏置
-# print(w*x)
+
+# x = np.array([0, 1])  # 输入
+# w = np.array([0.5, 0.5])  # 权重
+# b = -0.7  # 偏置
+# print(w * x)
 # print(np.sum(w * x))
 # print((np.sum(w * x) + b))
 
 
 def and_gate(x1, x2):
     """
+    式子2.2
     使用权重和偏置，可以像下面这样实现与门。
-    :param x1:
-    :param x2:
-    :return:
+    :param x1: 输入1
+    :param x2: 输入2
+    :return: 返回0或1
     """
     x = np.array([x1, x2])
     w = np.array([0.5, 0.5])
@@ -108,12 +113,12 @@ def and_gate(x1, x2):
     else:
         return 1
 
+
 # 确认与门真值表
 # print(and_gate(0, 0))
 # print(and_gate(1, 0))
 # print(and_gate(0, 1))
 # print(and_gate(1, 1))
-
 
 """
 与非门（NAND gate）。
@@ -132,14 +137,14 @@ NAND 是 Not AND 的意思，与非门就是颠倒了与门的输出。
 def not_and_gate(x1, x2):
     """
     用 Python 来实现与非门逻辑电路。
-    :param x1:
-    :param x2:
-    :return:
+    :param x1: 输入1
+    :param x2: 输入2
+    :return: 返回0或1
     """
     x = np.array([x1, x2])
     w = np.array([-0.5, -0.5])  # 仅权重和偏置与AND不同！
     b = 0.7
-    tmp = np.sum(w*x) + b
+    tmp = np.sum(w * x) + b
     if tmp <= 0:
         return 0
     elif tmp > 0:
@@ -147,12 +152,10 @@ def not_and_gate(x1, x2):
 
 
 # 确认与非门真值表
-# print(not_and_gate(0, 0))
-# print(not_and_gate(1, 0))
-# print(not_and_gate(0, 1))
-# print(not_and_gate(1, 1))
-
-
+print(not_and_gate(0, 0))
+print(not_and_gate(1, 0))
+print(not_and_gate(0, 1))
+print(not_and_gate(1, 1))
 
 """
 或门是“只要有一个输入信号是 1，输出就为 1”的逻辑电路。
@@ -166,22 +169,21 @@ def not_and_gate(x1, x2):
 (w1,w2,θ) = (1.0,1.0,0.5)
 """
 
-
-def or_gate(x1, x2):
-    """
-    用 Python 来实现或门逻辑电路。
-    :param x1: 输入1
-    :param x2: 输入2
-    :return: 输出1
-    """
-    x = np.array([x1, x2])
-    w = np.array([0.5, 0.5])  # 仅权重和偏置与AND不同！
-    b = -0.2
-    tmp = np.sum(w*x) + b
-    if tmp <= 0:
-        return 0
-    else:
-        return 1
+# def or_gate(x1, x2):
+#     """
+#     用 Python 来实现或门逻辑电路。
+#     :param x1: 输入1
+#     :param x2: 输入2
+#     :return: 输出1
+#     """
+#     x = np.array([x1, x2])
+#     w = np.array([0.5, 0.5])  # 仅权重和偏置与AND不同！
+#     b = -0.2
+#     tmp = np.sum(w*x) + b
+#     if tmp <= 0:
+#         return 0
+#     else:
+#         return 1
 
 # 确认或门真值表
 # print(or_gate(0, 0))
@@ -246,26 +248,24 @@ x1  x2  s1   s2  y
 用与非门、或门、与门组合异或门
 """
 
-
-def xor_gate(x1, x2):
-    """
-    用 Python 来实现异或门。
-    :param x1:
-    :param x2:
-    :return:
-    """
-    s1 = not_and_gate(x1, x2)
-    s2 = or_gate(x1, x2)
-    y = and_gate(s1, s2)
-    return y
+# def xor_gate(x1, x2):
+#     """
+#     用 Python 来实现异或门。
+#     :param x1:
+#     :param x2:
+#     :return:
+#     """
+#     s1 = not_and_gate(x1, x2)
+#     s2 = or_gate(x1, x2)
+#     y = and_gate(s1, s2)
+#     return y
 
 
 # 确认异或门真值表
-print(xor_gate(0, 0))
-print(xor_gate(0, 1))
-print(xor_gate(1, 0))
-print(xor_gate(1, 1))
-
+# print(xor_gate(0, 0))
+# print(xor_gate(0, 1))
+# print(xor_gate(1, 0))
+# print(xor_gate(1, 1))
 
 
 """
@@ -314,5 +314,3 @@ x1,x2构成第0层，s1,s2构成第1层，y构成第2层。
 多层感知机（在理论上）可以表示计算机。
 
 """
-
-
