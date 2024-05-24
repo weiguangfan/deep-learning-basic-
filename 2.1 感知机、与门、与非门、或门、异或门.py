@@ -152,10 +152,10 @@ def not_and_gate(x1, x2):
 
 
 # 确认与非门真值表
-print(not_and_gate(0, 0))
-print(not_and_gate(1, 0))
-print(not_and_gate(0, 1))
-print(not_and_gate(1, 1))
+# print(not_and_gate(0, 0))
+# print(not_and_gate(1, 0))
+# print(not_and_gate(0, 1))
+# print(not_and_gate(1, 1))
 
 """
 或门是“只要有一个输入信号是 1，输出就为 1”的逻辑电路。
@@ -169,28 +169,29 @@ print(not_and_gate(1, 1))
 (w1,w2,θ) = (1.0,1.0,0.5)
 """
 
-# def or_gate(x1, x2):
-#     """
-#     用 Python 来实现或门逻辑电路。
-#     :param x1: 输入1
-#     :param x2: 输入2
-#     :return: 输出1
-#     """
-#     x = np.array([x1, x2])
-#     w = np.array([0.5, 0.5])  # 仅权重和偏置与AND不同！
-#     b = -0.2
-#     tmp = np.sum(w*x) + b
-#     if tmp <= 0:
-#         return 0
-#     else:
-#         return 1
+
+def or_gate(x1, x2):
+    """
+    用 Python 来实现或门逻辑电路。
+    :param x1: 输入1
+    :param x2: 输入2
+    :return: 返回0或1
+    """
+    x = np.array([x1, x2])
+    w = np.array([0.5, 0.5])  # 仅权重和偏置与AND不同！
+    b = -0.2
+    tmp = np.sum(w * x) + b
+    if tmp <= 0:
+        return 0
+    else:
+        return 1
+
 
 # 确认或门真值表
 # print(or_gate(0, 0))
 # print(or_gate(1, 0))
 # print(or_gate(0, 1))
 # print(or_gate(1, 1))
-
 
 """
 使用感知机可以实现与门、与非门、或门三种逻辑电路。
@@ -211,6 +212,7 @@ print(not_and_gate(1, 1))
 (w1,w2,θ) = (1.0,1.0,0.5)
 (b,w1,w2) = (-0.5,1.0,1.0)
 感知机可用下面的式子表示:
+式子2.3
 y = 0 (-0.5 + x1 + x2 <= 0),
 y = 1 (-0.5 + x1 + x2 > 0)
 感知机会生成由直线 -0.5 + x1 + x2 分割开的两个空间。
@@ -248,25 +250,25 @@ x1  x2  s1   s2  y
 用与非门、或门、与门组合异或门
 """
 
-# def xor_gate(x1, x2):
-#     """
-#     用 Python 来实现异或门。
-#     :param x1:
-#     :param x2:
-#     :return:
-#     """
-#     s1 = not_and_gate(x1, x2)
-#     s2 = or_gate(x1, x2)
-#     y = and_gate(s1, s2)
-#     return y
+
+def xor_gate(x1, x2):
+    """
+    用 Python 来实现异或门。
+    :param x1:
+    :param x2:
+    :return:
+    """
+    s1 = not_and_gate(x1, x2)
+    s2 = or_gate(x1, x2)
+    y = and_gate(s1, s2)
+    return y
 
 
 # 确认异或门真值表
-# print(xor_gate(0, 0))
-# print(xor_gate(0, 1))
-# print(xor_gate(1, 0))
-# print(xor_gate(1, 1))
-
+print(xor_gate(0, 0))
+print(xor_gate(0, 1))
+print(xor_gate(1, 0))
+print(xor_gate(1, 1))
 
 """
 试着用感知机的表示方法（明确地显示神经元）来表示这个异或门，
