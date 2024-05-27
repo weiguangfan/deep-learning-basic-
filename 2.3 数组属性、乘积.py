@@ -18,6 +18,7 @@ a = np.array([1, 2, 3, 4])
 # print(np.ndim(a))
 # print(a.shape)
 # print(a.shape[0])
+
 """
 下面我们来生成一个二维数组。
 这里生成了一个 3 × 2 的数组 B。
