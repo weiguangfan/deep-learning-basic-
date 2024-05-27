@@ -39,17 +39,16 @@ astype() 方法通过参数指定期望的类型，这个例子中是 np.int 型
 Python 中将布尔型转换为int 型后，True 会转换为 1，False 会转换为 0。
 """
 
-
 # def step_function(x):
 #     y = x > 0  # 允许参数取 NumPy 数组
 #     return y.astype(np.int)
-
-
+#
+#
 # x = np.array([-1.0, 1.0, 2.0])
 # print(x)
 # y = x > 0
 # print(y)
-# print(step_function(y))
+#
 # y = y.astype(np.int)
 # print(y)
 
@@ -73,8 +72,8 @@ import matplotlib.pyplot as plt
 
 # def step_function(x):
 #     return np.array(x > 0, dtype=np.int)
-
-
+#
+#
 # x = np.arange(-5.0, 5.0, 0.1)
 # y = step_function(x)
 # plt.plot(x, y)
@@ -104,9 +103,8 @@ np.exp(-x) 对应 exp(-x)。
 刚才的 sigmoid 函数的实现也是如此，因为np.exp(-x) 会生成 NumPy 数组，所以 1 / (1 + np.exp(-x)) 的运算将会在NumPy 数组的各个元素间进行。
 """
 
-
-# def sigmoid(x):
-#     return 1/(1 + np.exp(-x))
+def sigmoid(x):
+    return 1/(1 + np.exp(-x))
 
 
 # x = np.array([-1.0, 1.0, 2.0])
@@ -170,7 +168,6 @@ sigmoid 函数是一条曲线，阶跃函数是一条像阶梯一样的折线，
 
 """
 
-
 """
 在神经网络发展的历史上，sigmoid 函数很早就开始被使用了，而最近则主要使用ReLU（Rectified Linear Unit）函数。
 ReLU 函数在输入大于 0 时，直接输出该值；在输入小于等于 0 时，输出0.
@@ -185,12 +182,11 @@ maximum 函数会从输入的数值中选择较大的那个值进行输出。
 这里使用了 NumPy 的 maximum 函数。maximum 函数会从输入的数值中选择较大的那个值进行输出。
 """
 
+def relu(x):
+    return np.maximum(0, x)
 
-# def relu(x):
-#     return np.maximum(0, x)
 
-
-# a = np.random.randn(2, 3)
-# print(a)
-# b = np.maximum(0, a)
-# print(b)
+a = np.random.randn(2, 3)
+print(a)
+b = np.maximum(0, a)
+print(b)
