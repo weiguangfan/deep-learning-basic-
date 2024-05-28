@@ -56,8 +56,10 @@ x = np.array([1.0, 0.5])
 w1 = np.array([[0.1, 0.3, 0.5], [0.2, 0.4, 0.6]])
 b1 = np.array([0.1, 0.2, 0.3])
 # print(x.shape)
+# print(x.ndim)
 # print(w1.shape)
 # print(b1.shape)
+# print(b1.ndim)
 a1 = np.dot(x, w1) + b1
 # print(a1)
 # print(a1.shape)
@@ -80,6 +82,7 @@ def sigmoid(x):
 z1 = sigmoid(a1)
 # print(z1)
 # print(z1.shape)
+
 """
 下面，我们来实现第 1 层到第 2 层的信号传递（图 3-19）。
 图 3-19　第 1 层到第 2 层的信号传递
@@ -121,7 +124,7 @@ b3 = np.array([0.1, 0.2])
 a3 = np.dot(z2, w3) + b3
 # print(a3.shape)
 # print(a3)
-# z3 = identity_function(a3)
+z3 = identity_function(a3)
 # print(z3.shape)
 # print(z3)
 """
@@ -174,8 +177,8 @@ def forward(network, x):
 
 network = init_network()
 x = np.array([1.0, 0.5])
-print(x.shape)
-print(x)
+# print(x.shape)
+# print(x)
 y = forward(network, x)
-print(y.shape)
-print(y)
+# print(y.shape)
+# print(y)
