@@ -50,6 +50,8 @@ import numpy as np
 考虑到后面还要使用 softmax 函数，这里我们把它定义成如下的 Python 函数。
 
 """
+
+
 # 封装成函数（缺陷：溢出问题）
 # def soft_max(a):
 #     exp_a = np.exp(a)
@@ -84,6 +86,8 @@ yk = math.exp(C' + ak)  / sum(C' + ai))
 如该例所示，通过减去输入信号中的最大值（上例中的 c），我们发现原本为nan（not a number，不确定）的地方，现在被正确计算了。
 综上，我们可以像下面这样实现 softmax 函数。
 """
+
+
 # a = np.array([1010, 1000, 990])
 # print((np.exp(a) / np.sum(np.exp(a))))  # softmax函数的运算：[nan nan nan] 输出没有被正确计算
 # c = np.max(a)
@@ -99,6 +103,7 @@ def soft_max(a):
     sum_exp_a = np.sum(exp_a)
     y = exp_a / sum_exp_a
     return y
+
 
 """
 使用 softmax() 函数，可以按如下方式计算神经网络的输出。
