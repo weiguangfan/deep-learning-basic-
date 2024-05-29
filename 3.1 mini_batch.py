@@ -29,16 +29,17 @@ E = - 1/N sum(sum(tnk * math.log(ynk)))
 mini-batch学习：利用一部分数据近似整体
 """
 
+import os
+import sys
 
-import sys, os
 sys.path.append(os.pardir)
 from dataset.mnist import load_mnist
 import numpy as np
 
 # 加载数据
-# (x_train, t_train), (x_test, t_test), = load_mnist(one_hot_label=True, normalize=True)
-# print(x_train.shape)  # (60000, 784) 输入数据784维
-# print(t_train.shape)  # (60000, 10) 监督数据10维
+(x_train, t_train), (x_test, t_test), = load_mnist(one_hot_label=True, normalize=True)
+print(x_train.shape)  # (60000, 784) 输入数据784维
+print(t_train.shape)  # (60000, 10) 监督数据10维
 """
 第 3 章介绍过，load_mnist 函数是用于读入 MNIST 数据集的函数。
 这个函数在本书提供的脚本 dataset/mnist.py 中，它会读入训练数据和测试数据。
@@ -51,15 +52,16 @@ import numpy as np
 
 """
 # 从训练数据随机抽取10笔数据
-# train_size = x_train.shape[0]
-# print(train_size)
-# batch_size = 10
-# batch_mask = np.random.choice(train_size, batch_size)
-# print(batch_mask)
-# x_batch = x_train[batch_mask]  # [56238 14055 32411 41573 48975 37604 50257 45892 41825 49994] 索引数组
-# print(x_batch.shape)  # (10, 784)
-# t_batch = t_train[batch_mask]
-# print(t_batch.shape)  # (10, 10)
+train_size = x_train.shape[0]
+print(train_size)
+batch_size = 10
+batch_mask = np.random.choice(train_size, batch_size)
+print(batch_mask)
+x_batch = x_train[batch_mask]  # [56238 14055 32411 41573 48975 37604 50257 45892 41825 49994] 索引数组
+print(x_batch.shape)  # (10, 784)
+t_batch = t_train[batch_mask]
+print(t_batch.shape)  # (10, 10)
+print(t_batch.size)  # 元素的总数
 """
 使用 np.random.choice() 可以从指定的数字中随机选择想要的数字。
 比如，np.random.choice(60000, 10) 会从 0 到 59999 之间随机选择 10 个数字。
@@ -112,6 +114,8 @@ np.arange (batch_size) 会生成一个从 0 到 batch_size-1 的数组。
 
 
 """
+
+
 def cross_entropy_error(y, t):
     """mini-batch 交叉熵损失：单个数据的平均交叉熵损失"""
     delta = 1e-7
@@ -121,7 +125,8 @@ def cross_entropy_error(y, t):
         y = y.reshape(1, y.size)
     batch_size = y.shape[0]
     # 单个数据的平均交叉熵损失
-    return -np.sum(np.log(y[np.arange(batch_size),t] + delta)) / batch_size
+    return -np.sum(np.log(y[np.arange(batch_size), t] + delta)) / batch_size
+
 
 """
 为何要设定损失函数上面我们讨论了损失函数，可能有人要问：
