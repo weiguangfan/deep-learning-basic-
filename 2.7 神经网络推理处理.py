@@ -74,12 +74,17 @@ def predict(network, x):
     return y
 
 x, t = get_data()  # t输出真实类别标签的数组
+print(x.shape)
 network = init_network()
+print(network.keys())
+
+
 accuracy_cnt = 0
 for i in range(len(x)):
     y = predict(network, x[i])  # 以数组形式输出各个标签对应的概率
     if i == 6:
         print(y.shape)
+        print(y)
     p = np.argmax(y)  # 取出概率列表最大值的索引
     if p == t[i]:
         accuracy_cnt += 1
