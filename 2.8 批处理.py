@@ -88,15 +88,16 @@ def predict(network, x):
 
 """
 # 输入多张图像的处理流程
-x, t = get_data()
-network = init_network()
-batch_size = 100  # 批数量
-accuracy_cnt = 0
-for i in range(0, len(x), batch_size):  # 步长为batch_size
-    x_batch = x[i:i+batch_size]  # 切片：取100个数，抽取批数据
-    y_batch = predict(network, x_batch)
-    p = np.argmax(y_batch, axis=1)
-    accuracy_cnt += np.sum(p == t[i:i+batch_size])
+# x, t = get_data()
+# network = init_network()
+# batch_size = 100  # 批数量
+# accuracy_cnt = 0
+# for i in range(0, len(x), batch_size):  # 步长为batch_size
+#     x_batch = x[i:i+batch_size]  # 切片：取100个数，抽取批数据
+#     y_batch = predict(network, x_batch)
+#     p = np.argmax(y_batch, axis=1)
+#     accuracy_cnt += np.sum(p == t[i:i+batch_size])
+# print(accuracy_cnt)
 """
 我们来逐个解释粗体的代码部分。
 首先是 range() 函数。
@@ -120,9 +121,10 @@ x[i:i+batch_n] 会取出从第 i 个到第 i+batch_n 个之间的数据。
 这里也来看一个例子。
 """
 # 获取数组值最大的索引，按照不同的轴
-x = np.array([[0.1, 0.8, 0.1], [0.3, 0.1, 0.6], [0.2, 0.5, 0.3], [0.8, 0.1, 0.1]])
-y = np.argmax(x, axis=1)
-print(y)
+# x = np.array([[0.1, 0.8, 0.1], [0.3, 0.1, 0.6], [0.2, 0.5, 0.3], [0.8, 0.1, 0.1]])
+# print(x)
+# y = np.argmax(x, axis=1)
+# print(y)
 """
 最后，我们比较一下以批为单位进行分类的结果和实际的答案。
 为此，需要在NumPy 数组之间使用比较运算符（==）生成由 True/False 构成的布尔型数组，并计算 True 的个数。
