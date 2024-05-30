@@ -21,8 +21,11 @@ e_L/e_W 的元素由各个元素关于 W 的偏导数构成。
 
 """
 
-import sys, os
+import os
+import sys
+
 import numpy as np
+
 sys.path.append(os.pardir)
 
 
@@ -63,8 +66,10 @@ def numerical_gradient(f, x):
     while not it.finished:
         idx = it.multi_index
         print("idx: ", idx)
+
         tmp_val = x[idx]
         print('tmp_val: ', tmp_val)
+
         x[idx] = tmp_val + h
         print('++ x[idx]: : ', x[idx])
         fxh1 = f(x)
@@ -72,12 +77,15 @@ def numerical_gradient(f, x):
         x[idx] = tmp_val - h
         print('-- x[idx]: : ', x[idx])
         fxh2 = f(x)
-        grad[idx] = (fxh1 - fxh2) / (2*h)
+
+        grad[idx] = (fxh1 - fxh2) / (2 * h)
         print('grad[idx]: ', grad[idx])
+
         x[idx] = tmp_val
         it.iternext()
 
     return grad
+
 
 """
 这里使用了 common/functions.py 中的 softmax 和cross_entropy_error 方法，
@@ -88,8 +96,11 @@ simpleNet 类只有一个实例变量，即形状为 2×3的权重参数。
 现在我们来试着用一下这个 simpleNet。
 
 """
+
+
 class simpleNet(object):
     """定义一个简单的神经网络，求梯度"""
+
     def __init__(self):
         """定义一个权重参数self.w"""
         self.w = np.random.randn(2, 3)  # 用高斯分布进行初始化
@@ -104,15 +115,19 @@ class simpleNet(object):
         """求损失"""
         print("loss_input x: ", x)
         print("loss_input t: ", t)
+
         z = self.predict(x)
         print("z: ", z)
         print("z.shape: ", z.shape)
+
         y = soft_max(z)
         print("y: ", y)
         print("y.shape: ", y.shape)
+
         loss = cross_entropy_error(y, t)
         print("loss: ", loss)
         return loss
+
 
 # 实例化对象
 net = simpleNet()
@@ -145,11 +160,14 @@ print(net.loss(x, t))
 因为numerical_gradient(f, x) 会在内部执行 f(x)，为了与之兼容而定义了f(W)）。
 
 """
+
+
 # 求梯度
-# f = lambda w:net.loss(x, t)
-def f(W):
-    """参数w是一个伪参数"""
-    return net.loss(x, t)
+f = lambda w:net.loss(x, t)
+# def f(W):
+#     """参数w是一个伪参数"""
+#     return net.loss(x, t)
+
 
 """
 numerical_gradient(f, x) 的参数 f 是函数，x 是传给函数 f 的参数。
@@ -178,6 +196,6 @@ print(dw)
 这里省略了对代码的说明，想知道细节的读者请参考源代码（common/gradient.py）。
 """
 
-f = lambda w: net.loss(x,t)
+# f = lambda w: net.loss(x, t)
 
-dw = numerical_gradient(f,net.w)
+# dw = numerical_gradient(f, net.w)
