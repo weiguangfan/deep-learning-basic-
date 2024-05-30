@@ -28,22 +28,24 @@ epoch 是一个单位。
 与前面的代码不同的地方，我们用粗体来表示。
 
 """
-import sys, os
+import os
+import sys
+
 sys.path.append(os.pardir)
 import numpy as np
 from dataset.mnist import load_mnist
 import matplotlib.pyplot as plt
 
+
 def sigmoid(x):
     """sigmoid激活函数"""
-    return 1/(1 + np.exp(-x))
+    return 1 / (1 + np.exp(-x))
 
 
 def numerical_gradient(f, x):
     """遍历数组的各个元素，进行数值微分"""
     h = 1e-4
     grad = np.zeros_like(x)
-
 
     # for idx in range(x.size):
     #     tmp_val = x[idx]
@@ -63,7 +65,7 @@ def numerical_gradient(f, x):
         fxh1 = f(x)
         x[idx] = tmp_val - h
         fxh2 = f(x)
-        grad[idx] = (fxh1 - fxh2) / (2*h)
+        grad[idx] = (fxh1 - fxh2) / (2 * h)
         x[idx] = tmp_val
         it.iternext()
 
@@ -84,6 +86,7 @@ def cross_entropy_error(y, t):
     delta = 1e-7
     return -np.sum(t * np.log(y + delta))
 
+
 # def cross_entropy_error(y, t):
 #     delta = 1e-7
 #     if y.ndim == 1:
@@ -96,6 +99,7 @@ def cross_entropy_error(y, t):
 
 class TwoLayerNet(object):
     """epoch mini-batch SGD"""
+
     def __init__(self, input_size, hidden_size, output_size, weight_init_std=0.0):
         self.params = {}
         self.params['w1'] = weight_init_std * np.random.randn(input_size, hidden_size)
@@ -122,7 +126,7 @@ class TwoLayerNet(object):
         y = self.predict(x)
         y = np.argmax(y, axis=1)
         t = np.argmax(y, axis=1)
-        accurary = np.sum(y == t)/float(x.shape[0])
+        accurary = np.sum(y == t) / float(x.shape[0])
         return accurary
 
     def numerical_gradient(self, x, t):
@@ -133,6 +137,7 @@ class TwoLayerNet(object):
         grads['w2'] = numerical_gradient(loss_W, self.params['w2'])
         grads['b2'] = numerical_gradient(loss_W, self.params['b2'])
         return grads
+
 
 # 获取mini-batch
 (x_train, t_train), (x_test, t_test), = load_mnist(normalize=True, one_hot_label=True)
@@ -147,7 +152,7 @@ train_size = x_train.shape[0]
 batch_size = 100
 learning_rate = 0.1
 
-iter_per_epoch = max(train_size/batch_size, 1)
+iter_per_epoch = max(train_size / batch_size, 1)
 
 network = TwoLayerNet(input_size=784, hidden_size=50, output_size=10)
 # 这个是按照mini-batch，完成一个epoch;
@@ -181,9 +186,11 @@ for i in range(iters_num):
         test_acc = network.accurary(x_test, t_test)
         train_acc_list.append(train_acc)
         test_acc_list.append(test_acc)
-        print("train acc, test acc | " + str(train_acc) + ", " + str(test_acc) )
+        print("train acc, test acc | " + str(train_acc) + ", " + str(test_acc))
 
 print("train_loss_list: ", train_loss_list)
+print("train_acc_list: ", train_acc_list)
+print("test_loss_list: ", test_acc_list)
 """
 在上面的例子中，每经过一个 epoch，就对所有的训练数据和测试数据计算识别精度，并记录结果。
 之所以要计算每一个 epoch 的识别精度，是因为如果在for 语句的循环中一直计算识别精度，会花费太多时间。
@@ -200,8 +207,6 @@ print("train_loss_list: ", train_loss_list)
 因此，可以说这次的学习中没有发生过拟合的现象。
 
 """
-
-
 
 # 绘图观察训练集和测试集的精确度；
 markers = {'train': 'o', 'test': 's'}
