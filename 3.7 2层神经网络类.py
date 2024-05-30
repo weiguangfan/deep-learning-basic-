@@ -33,21 +33,22 @@ SGD 来源于随机梯度下降法的英文名称的首字母。
 
 """
 
-import sys, os
+import os
+import sys
+
 sys.path.append(os.pardir)
 import numpy as np
 
 
 def sigmoid(x):
     """sigmoid激活函数"""
-    return 1/(1 + np.exp(-x))
+    return 1 / (1 + np.exp(-x))
 
 
 def numerical_gradient(f, x):
     '''遍历数组的每一个元素，进行数值微分'''
     h = 1e-4
     grad = np.zeros_like(x)
-
 
     # for idx in range(x.size):
     #     tmp_val = x[idx]
@@ -67,7 +68,7 @@ def numerical_gradient(f, x):
         fxh1 = f(x)
         x[idx] = tmp_val - h
         fxh2 = f(x)
-        grad[idx] = (fxh1 - fxh2) / (2*h)
+        grad[idx] = (fxh1 - fxh2) / (2 * h)
         x[idx] = tmp_val
         it.iternext()
 
@@ -88,16 +89,16 @@ def cross_entropy_error(y, t):
     delta = 1e-7
     return -np.sum(t * np.log(y + delta))
 
+
 """
 TwoLayerNet 的实现参考了斯坦福大学 CS231n 课程提供的 Python 源代码。
 
 """
 
 
-
-
 class TwoLayerNet(object):
     """2层神经网络，1层隐藏层"""
+
     def __init__(self, input_size, hidden_size, output_size, weight_init_std=0.0):
         """
         初始化权重；
@@ -108,10 +109,12 @@ class TwoLayerNet(object):
         :param weight_init_std:
         """
         self.params = {}
+
         # 第一层的权重，高斯分布初始化
         self.params['w1'] = weight_init_std * np.random.randn(input_size, hidden_size)
         # 第一层的偏置，0进行初始化
         self.params['b1'] = np.zeros(hidden_size)
+
         # 第二层的权重
         self.params['w2'] = weight_init_std * np.random.randn(hidden_size, output_size)
         # 第二层的偏置
@@ -123,8 +126,11 @@ class TwoLayerNet(object):
         b1, b2 = self.params['b1'], self.params['b2']
 
         a1 = np.dot(x, w1) + b1
+
         z1 = sigmoid(a1)
+
         a2 = np.dot(z1, w2) + b2
+
         y = soft_max(a2)
 
         return y
@@ -147,9 +153,13 @@ class TwoLayerNet(object):
         :return:
         """
         y = self.predict(x)
+
         y = np.argmax(y, axis=1)
+
         t = np.argmax(y, axis=1)
-        accurary = np.sum(y == t)/float(x.shape[0])
+
+        accurary = np.sum(y == t) / float(x.shape[0])
+
         return accurary
 
     def numerical_gradient(self, x, t):
@@ -161,16 +171,22 @@ class TwoLayerNet(object):
         :return:
         """
         loss_W = lambda W: self.loss(x, t)
+
         grads = {}
+
         # 第一层权重的梯度
         grads['w1'] = numerical_gradient(loss_W, self.params['w1'])
         # 第一层偏置的梯度
         grads['b1'] = numerical_gradient(loss_W, self.params['b1'])
+
         # 第二层权重的梯度
         grads['w2'] = numerical_gradient(loss_W, self.params['w2'])
         # 第二层偏置的梯度
         grads['b2'] = numerical_gradient(loss_W, self.params['b2'])
+
         return grads
+
+
 """
 虽然这个类的实现稍微有点长，但是因为和上一章的神经网络的前向处理的实现有许多共通之处，所以并没有太多新东西。
 我们先把这个类中用到的变量和方法整理一下。
@@ -224,9 +240,9 @@ print(net.params['b2'].shape)
 
 """
 # 伪输入数据
-x = np.random.rand(100, 784)
-y = net.predict(x)
-
+# x = np.random.rand(100, 784)
+# y = net.predict(x)
+# print(y.shape)
 """
 此外，与 params 变量对应，grads 变量中保存了各个参数的梯度。
 如下所示，使用 numerical_gradient() 方法计算梯度后，梯度的信息将保存在 grads变量中。
