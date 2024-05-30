@@ -51,10 +51,12 @@ import numpy as np
 """
 问题：请用梯度法求 f(x0 + x1) = x[0]**2 + x[1]**2 的最小值。
 """
+
+
 def function_2(x):
     """原函数"""
     print("x: ", x)
-    return x[0]**2 + x[1]**2
+    return x[0] ** 2 + x[1] ** 2
 
 
 def numerical_gradient(f, x):
@@ -66,15 +68,20 @@ def numerical_gradient(f, x):
         print("idx: ", idx)
         tmp_val = x[idx]
         print('i:tmp_val: ', idx, tmp_val)
+
         x[idx] = tmp_val + h
         fxh1 = f(x)
         print("idx:fxh1: ", idx, fxh1)
+
         x[idx] = tmp_val - h
         fxh2 = f(x)
-        grad[idx] = (fxh1 - fxh2)/(2*h)
+
+        grad[idx] = (fxh1 - fxh2) / (2 * h)
         print("grad: ", grad)
+
         x[idx] = tmp_val
     return grad
+
 
 """
 下面，我们用 Python 来实现梯度下降法。
@@ -87,15 +94,19 @@ numerical_gradient(f,x) 会求函数的梯度，用该梯度乘以学习率得�
 下面，我们就来尝试解决下面这个问题。
 
 """
+
+
 def gradient_descent(f, init_x, lr=0.01, step_num=100):
     """梯度下降法："""
     x = init_x
+
     # 反复执行更新的式子
     for i in range(step_num):  # step_num梯度法的重复次数
         print("###" * 10)
         print("i: ", i)
         # 返回偏导向量组成的数组
         grad = numerical_gradient(f, x)
+
         # 更新一次的式子，lr学习率过大过小，都无法抵达一个好的位置
         x -= lr * grad
     return x
@@ -105,7 +116,7 @@ def gradient_descent(f, init_x, lr=0.01, step_num=100):
 init_x = np.array([-3.0, 4.0])
 
 # 使用梯度法寻找最小值，没怎么更新就结束了
-print(gradient_descent(function_2, init_x, lr=0.1, step_num=100))
+# print(gradient_descent(function_2, init_x, lr=0.1, step_num=100))
 """
 这里，设初始值为 (-3.0, 4.0)，开始使用梯度法寻找最小值。
 最终的结果是(-6.1e-10, 8.1e-10)，非常接近 (0, 0)。
@@ -133,9 +144,7 @@ print(gradient_descent(function_2, init_x, lr=0.1, step_num=100))
 
 """
 # 学习率过大，lr=10.0，会发散成一个很大的值
-print(gradient_descent(function_2, init_x, lr=10, step_num=100))
-
+# print(gradient_descent(function_2, init_x, lr=10, step_num=100))
 
 # 学习率过小，lr=1e-10，
 print(gradient_descent(function_2, init_x, lr=1e-10, step_num=100))
-
