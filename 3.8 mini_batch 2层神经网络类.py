@@ -6,22 +6,23 @@
 
 """
 
-import sys, os
+import os
+import sys
+
 sys.path.append(os.pardir)
 import numpy as np
-from  dataset.mnist import load_mnist
+from dataset.mnist import load_mnist
 
 
 def sigmoid(x):
     """sigmoid激活函数"""
-    return 1/(1 + np.exp(-x))
+    return 1 / (1 + np.exp(-x))
 
 
 def numerical_gradient(f, x):
     """遍历数组的各个元素，进行数值微分"""
     h = 1e-4
     grad = np.zeros_like(x)
-
 
     # for idx in range(x.size):
     #     tmp_val = x[idx]
@@ -41,7 +42,7 @@ def numerical_gradient(f, x):
         fxh1 = f(x)
         x[idx] = tmp_val - h
         fxh2 = f(x)
-        grad[idx] = (fxh1 - fxh2) / (2*h)
+        grad[idx] = (fxh1 - fxh2) / (2 * h)
         x[idx] = tmp_val
         it.iternext()
 
@@ -65,6 +66,7 @@ def cross_entropy_error(y, t):
 
 class TwoLayerNet(object):
     """2层网络的实现"""
+
     def __init__(self, input_size, hidden_size, output_size, weight_init_std=0.0):
         self.params = {}
         self.params['w1'] = weight_init_std * np.random.randn(input_size, hidden_size)
@@ -91,7 +93,7 @@ class TwoLayerNet(object):
         y = self.predict(x)
         y = np.argmax(y, axis=1)
         t = np.argmax(y, axis=1)
-        accurary = np.sum(y == t)/float(x.shape[0])
+        accurary = np.sum(y == t) / float(x.shape[0])
         return accurary
 
     def numerical_gradient(self, x, t):
@@ -102,6 +104,7 @@ class TwoLayerNet(object):
         grads['w2'] = numerical_gradient(loss_W, self.params['w2'])
         grads['b2'] = numerical_gradient(loss_W, self.params['b2'])
         return grads
+
 
 """
 这里，mini-batch 的大小为 100，需要每次从 60000 个训练数据中随机取出 100 个数据（图像数据和正确解标签数据）。
@@ -118,22 +121,25 @@ class TwoLayerNet(object):
 
 """
 
-
-
 # 获取mini-=batch
 # 加载数据
 (x_train, t_train), (x_test, t_test), = load_mnist(normalize=True, one_hot_label=True)
+
 train_loss_list = []
 
 # 超参数
 # 最大迭代次数
 iters_num = 10000
+
 # 输入层神经元
 train_size = x_train.shape[0]
+
 # 批数量
 batch_size = 100
+
 # 学习率
 learning_rate = 0.1
+
 # 初始化实例对象
 network = TwoLayerNet(input_size=784, hidden_size=50, output_size=10)
 
@@ -142,10 +148,13 @@ network = TwoLayerNet(input_size=784, hidden_size=50, output_size=10)
 for i in range(iters_num):
     # 随机选择样本，返回样本索引的数组
     batch_mask = np.random.choice(train_size, batch_size)
+
     # 输入批数据
     x_batch = x_train[batch_mask]
+
     # 标签批数据
     t_batch = t_train[batch_mask]
+
     # 计算各个参数相对于损失函数的梯度
     grad = network.numerical_gradient(x_batch, t_batch)
 
@@ -157,8 +166,8 @@ for i in range(iters_num):
     # 记录学习过程
     # 计算批数据的总损失
     loss = network.loss(x_batch, t_batch)
+
     # 每批数据的损失，均添加到列表
     train_loss_list.append(loss)
 
 print("train_loss_list: ", train_loss_list)
-
