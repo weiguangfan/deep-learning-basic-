@@ -8,10 +8,11 @@
 """
 import numpy as np
 
+
 def function_2(x):
     """原函数"""
     print("x: ", x)
-    return x[0]**2 + x[1]**2
+    return x[0] ** 2 + x[1] ** 2
 
 
 def numerical_gradient(f, x):
@@ -19,28 +20,36 @@ def numerical_gradient(f, x):
     h = 1e-4  # 0.0001
     grad = np.zeros_like(x)  # 生成和x形状相同的数组
     print("grad: ", grad)
+
     # 遍历数组的每个元素
     for idx in range(x.size):
         print("idx: ", idx)
+
         # 取当前下标对应的值
         tmp_val = x[idx]
         print('i:tmp_val: ', idx, tmp_val)
+
         # f(x + h) 的计算
         x[idx] = tmp_val + h
         # 固定其他下标的值，当前下标的值 + h，并求函数值
         fxh1 = f(x)
         print("idx:fxh1: ", idx, fxh1)
+
         # f(x - h) 的计算
         x[idx] = tmp_val - h
         # 固定其他下标的值，当前下标的值 - h，并求函数值
         fxh2 = f(x)
         print("idx:fxh2: ", idx, fxh2)
+
         # 进行数值微分，并保存为字典
-        grad[idx] = (fxh1 - fxh2)/(2*h)
+        grad[idx] = (fxh1 - fxh2) / (2 * h)
         print("idx:grad: ", idx, grad)
+
         # 恢复当前下标对应的值
         x[idx] = tmp_val  # 还原值
     return grad
+
+
 """
 函数 numerical_gradient(f, x) 的实现看上去有些复杂，但它执行的处理和求单变量的数值微分基本没有区别。
 需要补充说明一下的是，np.zeros_like(x)会生成一个形状和 x 相同、所有元素都为 0 的数组。
