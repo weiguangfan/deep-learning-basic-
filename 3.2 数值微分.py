@@ -29,14 +29,16 @@ d(f(x)) / dx = lim ((f(x + h) - f(x)) / h )
 乍一看这个实现没有问题，但是实际上这段代码有两处需要改进的地方。
 
 """
-
 import numpy as np
 import matplotlib.pyplot as plt
+
 # 不好实现的示例
 # def numerical_diff(f, x):
 #     """函数的导数"""
 #     h = 10e-50  # h无限接近0，由于舍入误差，会省略小数点的精细部分的数值（小数点第8位以后的数值），导致结果上的误差
-#     return (f(x + h) - f(x))/h  # 0.0
+#     return (f(x + h) - f(x)) / h  # 0.0
+
+
 """
 在上面的实现中，因为想把尽可能小的值赋给 h（可以话，想让 h 无限接近0），所以 h 使用了 10e-50（有 50 个连续的 0 的“0.00 ... 1”）这个微小值。
 但是，这样反而产生了舍入误差（rounding error）。
@@ -46,6 +48,7 @@ import matplotlib.pyplot as plt
 """
 # 舍入误差，无法正确表达出来
 # print(np.float32(1e-50))
+# print(np.float32(1e-4))
 """
 如上所示，如果用 float32 类型（32 位的浮点数）来表示 1e-50，就会变成 0.0，无法正确表示出来。
 也就是说，使用过小的值会造成计算机出现计算上的问题。
@@ -64,12 +67,15 @@ import matplotlib.pyplot as plt
 下面，我们基于上述两个要改进的点来实现数值微分（数值梯度）。
 """
 
+
 def numerical_diff(f, x):
     """改进版的函数的导数"""
     h = 1e-4  # 改为1e-4， 就能正确表达
-    return (f(x + h) - f(x - h))/(2 * h)  # 数值微分存在误差，采用中心差分
+    return (f(x + h) - f(x - h)) / (2 * h)  # 数值微分存在误差，采用中心差分
+
+
 """
-如上所示，利用微小的差分求导数的过程称为数值微分（numericaldifferentiation）。
+如上所示，利用微小的差分求导数的过程称为数值微分（numerical differentiation）。
 而基于数学式的推导求导数的过程，则用“解析性”（analytic）一词，称为“解析性求解”或者“解析性求导”。
 比如，y= math.pow(x) 的导数，可以通过 d(y)/dx = 2x 解析性地求解出来。
 因此，当 x = 2 时，y的导数为 4。
@@ -83,7 +89,8 @@ y = 0.01 * math.pow(x) + 0.1 * x
 
 # 简单函数构造
 def function_1(x):
-    return 0.01 * x**2 + 0.1*x
+    return 0.01 * x ** 2 + 0.1 * x
+
 
 """
 接下来，我们来绘制这个函数的图像。
@@ -92,12 +99,12 @@ def function_1(x):
 """
 
 # 简单函数图形
-x = np.arange(0.0, 20.0, 0.1)
-y = function_1(x)
-plt.xlabel('x')
-plt.ylabel('y')
-plt.plot(x, y)
-plt.show()
+# x = np.arange(0.0, 20.0, 0.1)
+# y = function_1(x)
+# plt.xlabel('x')
+# plt.ylabel('y')
+# plt.plot(x, y)
+# plt.show()
 """
 我们来计算一下这个函数在 x = 5 和 x = 10 处的导数。
 这里计算的导数是 f(x) 相对于 x 的变化量，对应函数的斜率。
@@ -115,4 +122,3 @@ print(numerical_diff(function_1, 10))  # 0.2999999999986347
 结果如图 4-7 所示，可以确认这些直线确实对应函数的切线（源代码在 ch04/gradient_1d.py中）。
 图 4-7 x=5　、x=10 处的切线：直线的斜率使用数值微分的值
 """
-

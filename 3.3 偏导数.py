@@ -11,13 +11,15 @@ f(x0,x1) = math.pow(x0) + math.pow(x1)
 
 def numerical_diff(f, x):
     h = 1e-4
-    return (f(x + h) - f(x - h))/(2 * h)
+    return (f(x + h) - f(x - h)) / (2 * h)
 
 
 def function_2(x):
     """含有两个变量的函数"""
-    return x[0]**2 + x[1]**2
+    return x[0] ** 2 + x[1] ** 2
     # return np.sum(x**2)
+
+
 """
 这里，我们假定向参数输入了一个 NumPy 数组。
 函数的内部实现比较简单，先计算 NumPy 数组中各个元素的平方，再求它们的和（np.sum(x**2) 也可以实现同样的处理）。
@@ -36,21 +38,25 @@ def function_2(x):
 问题 1：求 x0=3,x1=4 时，关于 x0 的偏导数 df/dx0。
 
 """
+
+
 def function_tmp1(x0):
     """原函数中设x1=4.0，定义一个只有一个变量的函数"""
-    return x0*x0 + 4.0**2.0
+    return x0 * x0 + 4.0 ** 2.0
 
 
 # 对x0求导时
-print(numerical_diff(function_tmp1, 3.0))  # 6.00000000000378
+# print(numerical_diff(function_tmp1, 3.0))  # 6.00000000000378
 
 """
 问题 2：求 x0=3,x1=4 时，关于 x1 的偏导数 dy/dx1 。
 """
+
+
 # 求x0=3,x1=4时，关于x1的偏导
 def function_tmp2(x1):
     """原函数中设x0=3.0，定义一个只有一个变量的函数"""
-    return 3.0**2.0 + x1*x1
+    return 3.0 ** 2.0 + x1 * x1
 
 
 # 对x1求导时
